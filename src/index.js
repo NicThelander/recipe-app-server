@@ -16,8 +16,7 @@ app.use(bodyParser.json()); // used to parse middleware
 app.use(authRoutes); // this is where the authRoutes and recipeRoutes express routers are added for use in the server
 app.use(recipeRoutes);
 
-const mongoUri = // this is where the server accesses the mongodb database with the connection string
-  'mongodb+srv://nic:testpass97@cluster0.dih4r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const mongoUri = 'Your mongo db link goes in these quotes'; // this is where the server accesses the mongodb database with the connection string
 
 if (!mongoUri) {
   throw new Error(`Error with the mongoUri`);
