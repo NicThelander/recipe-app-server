@@ -41,12 +41,30 @@ router.post('/recipes', async (req, res) => {
   }
 
   try {
-    const recipe = new Recipe({ name, recipeId, userId: req.user.id });
-    await recipe.save();
-    res.send(recipe);
+    var existenceChecker;
+    await Recipe.findOne({ recipeId }, async function (err, obj) {
+      // checks if the recipe already exists in list before adding it
+
+      if (obj !== null) {
+        return (existenceChecker = true);
+      }
+
+      return (existenceChecker = false);
+    });
+
+    if (existenceChecker) {
+      throw 'recipe already saved';
+    } else {
+      // attempts to add recipe if check passes
+      const recipe = new Recipe({ name, recipeId, userId: req.user.id });
+
+      await recipe.save();
+
+      res.send(recipe);
+    }
   } catch (err) {
+    console.log(err);
     res.status(422).send({ error: err.message });
   }
 });
-
 module.exports = router; // exporting the route for use in index.js
