@@ -17,6 +17,19 @@ router.get('/recipes', async (req, res) => {
   res.send(recipes);
 });
 
+router.post('/recipes/delete', async (req, res) => {
+  // method for deleting saved recipes
+  const { recipeId } = req.body;
+
+  Recipe.findOneAndDelete(recipeId, (err, Recipe) => {
+    if (err) {
+      return console.log(err);
+    }
+  });
+  console.log('Recipe deleted');
+  res.status(200).send();
+});
+
 router.post('/recipes', async (req, res) => {
   // request to save recipes to the users account
   const { name, recipeId } = req.body;
